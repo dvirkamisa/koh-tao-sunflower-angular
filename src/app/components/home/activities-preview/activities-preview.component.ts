@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './activities-preview.component.html',
   styleUrls: ['./activities-preview.component.scss']
 })
+/**
+ * Displays a preview list of available activities.
+ */
 export class ActivitiesPreviewComponent {
   activities = [
     {

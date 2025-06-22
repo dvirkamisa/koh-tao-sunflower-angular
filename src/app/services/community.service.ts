@@ -15,35 +15,50 @@ export interface CommunityMember {
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for community member operations.
+ */
 export class CommunityService {
   constructor(private apiService: ApiService) { }
 
-  // Get all community members
+  /**
+   * Get all community members.
+   */
   getMembers(): Observable<CommunityMember[]> {
     return this.apiService.get<CommunityMember[]>('/community/members');
   }
 
-  // Get a specific member by ID
+  /**
+   * Get a specific member by ID.
+   */
   getMember(id: string): Observable<CommunityMember> {
     return this.apiService.get<CommunityMember>(`/community/members/${id}`);
   }
 
-  // Join the community
+  /**
+   * Join the community by sending member data to the backend.
+   */
   joinCommunity(member: CommunityMember): Observable<CommunityMember> {
     return this.apiService.post<CommunityMember>('/community/join', member);
   }
 
-  // Update member information
+  /**
+   * Update member information.
+   */
   updateMember(id: string, member: CommunityMember): Observable<CommunityMember> {
     return this.apiService.put<CommunityMember>(`/community/members/${id}`, member);
   }
 
-  // Deactivate member
+  /**
+   * Deactivate a community member.
+   */
   deactivateMember(id: string): Observable<void> {
     return this.apiService.patch<void>(`/community/members/${id}/deactivate`, {});
   }
 
-  // Reactivate member
+  /**
+   * Reactivate a community member.
+   */
   reactivateMember(id: string): Observable<void> {
     return this.apiService.patch<void>(`/community/members/${id}/reactivate`, {});
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,8 +12,20 @@ import { CommunityService } from '../../services/community.service';
   templateUrl: './join-us.component.html',
   styleUrls: ['./join-us.component.scss']
 })
+/**
+ * JoinUsComponent handles the community registration form.
+ */
 export class JoinUsComponent {
-  joinForm: FormGroup;
+  /** Typed reactive form for joining the community */
+  joinForm: FormGroup<{
+    full_name: FormControl<string>;
+    phone: FormControl<string>;
+    email: FormControl<string | null>;
+    specialty: FormControl<string>;
+    specialty_other: FormControl<string | null>;
+    experience: FormControl<string | null>;
+    availability: FormControl<string | null>;
+  }>;
   isSubmitting = false;
   submitted = false;
   error = '';
@@ -33,20 +45,23 @@ export class JoinUsComponent {
   ];
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private communityService: CommunityService
   ) {
     this.joinForm = this.fb.group({
-      full_name: ['', [Validators.required, Validators.minLength(2)]],
-      phone: ['', [Validators.required, Validators.pattern(/^[\+]?[0-9\s\-\(\)]+$/)]],
-      email: ['', [Validators.email]],
-      specialty: ['', Validators.required],
-      specialty_other: [''],
-      experience: [''],
-      availability: ['']
+      full_name: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(2)]),
+      phone: this.fb.nonNullable.control('', [Validators.required, Validators.pattern(/^[\+]?[0-9\s\-\(\)]+$/)]),
+      email: this.fb.control<string | null>('', [Validators.email]),
+      specialty: this.fb.nonNullable.control('', Validators.required),
+      specialty_other: this.fb.control<string | null>(''),
+      experience: this.fb.control<string | null>(''),
+      availability: this.fb.control<string | null>('')
     });
   }
 
+  /**
+   * Submit the join form if it is valid and send data to the API.
+   */
   async onSubmit() {
     if (this.joinForm.valid) {
       this.isSubmitting = true;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,8 +12,17 @@ import { ActivitiesService } from '../../services/activities.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
+/**
+ * RegisterComponent allows visitors to sign up for selected activities.
+ */
 export class RegisterComponent {
-  registerForm: FormGroup;
+  /** Reactive form used for registering to activities */
+  registerForm: FormGroup<{
+    full_name: FormControl<string>;
+    phone: FormControl<string>;
+    preferred_dates: FormControl<string | null>;
+    additional_notes: FormControl<string | null>;
+  }>;
   selectedInterests: string[] = [];
   isSubmitting = false;
   submitted = false;
@@ -30,14 +39,14 @@ export class RegisterComponent {
   ];
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private activitiesService: ActivitiesService
   ) {
     this.registerForm = this.fb.group({
-      full_name: ['', [Validators.required, Validators.minLength(2)]],
-      phone: ['', [Validators.required, Validators.pattern(/^[\+]?[0-9\s\-\(\)]+$/)]],
-      preferred_dates: [''],
-      additional_notes: ['']
+      full_name: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(2)]),
+      phone: this.fb.nonNullable.control('', [Validators.required, Validators.pattern(/^[\+]?[0-9\s\-\(\)]+$/)]),
+      preferred_dates: this.fb.control<string | null>(''),
+      additional_notes: this.fb.control<string | null>('')
     });
   }
 
@@ -53,6 +62,9 @@ export class RegisterComponent {
     }
   }
 
+  /**
+   * Submit the registration form and register for selected activities.
+   */
   async onSubmit() {
     if (this.registerForm.valid && this.selectedInterests.length > 0) {
       this.isSubmitting = true;

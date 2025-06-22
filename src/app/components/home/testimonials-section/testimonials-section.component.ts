@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './testimonials-section.component.html',
   styleUrls: ['./testimonials-section.component.scss']
 })
+/**
+ * Carousel component displaying testimonials.
+ */
 export class TestimonialsSectionComponent implements OnInit, OnDestroy {
   currentIndex = 0;
   private interval: any;

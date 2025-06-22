@@ -1,4 +1,7 @@
 import express from 'express';
+/**
+ * Routes for community membership and management.
+ */
 import CommunityMember from '../models/CommunityMember';
 import nodemailer from 'nodemailer';
 
