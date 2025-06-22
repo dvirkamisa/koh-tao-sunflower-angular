@@ -64,7 +64,7 @@ export class AdminComponent implements OnInit {
 
   markProcessed(submission: FormSubmission) {
     if (!submission.id) return;
-    this.service.updateSubmission(submission.id, { status: 'processed' }).subscribe(() => {
+    this.service.updateSubmission(submission.id, { status: 'approved' }).subscribe(() => {
       this.snackBar.open('העודכן', 'סגור', { duration: 2000 });
       this.loadSubmissions();
     });
@@ -120,19 +120,20 @@ export class AdminComponent implements OnInit {
   ]
 })
 export class AddSubmissionDialogComponent {
+  private fb = inject(FormBuilder);
+  private service = inject(FormSubmissionService);
+  private dialogRef = inject(MatDialog);
+
   form = this.fb.nonNullable.group({
     full_name: ['', Validators.required],
     phone: ['', Validators.required],
     email: ['']
   });
-  private fb = inject(FormBuilder);
-  private service = inject(FormSubmissionService);
-  private dialogRef = inject(MatDialog);
 
   submit() {
     const data: JoinUsFormData = {
-      full_name: this.form.value.full_name,
-      phone: this.form.value.phone,
+      full_name: this.form.value.full_name!,
+      phone: this.form.value.phone!,
       email: this.form.value.email || '',
       specialty: 'other',
       availability: '',
