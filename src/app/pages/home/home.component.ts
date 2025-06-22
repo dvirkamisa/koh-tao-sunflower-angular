@@ -10,8 +10,8 @@ import { TestimonialsSectionComponent } from '../../components/home/testimonials
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterLink, 
+    CommonModule,
+    RouterLink,
     HeroSectionComponent,
     WhyWeAreHereComponent,
     ActivitiesPreviewComponent,
@@ -22,4 +22,4 @@ import { TestimonialsSectionComponent } from '../../components/home/testimonials
 })
 export class HomeComponent {
   // Clean component without debug functionality
-} 
+}

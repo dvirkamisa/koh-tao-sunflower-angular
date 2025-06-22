@@ -1,0 +1,16 @@
+<mat-sidenav-container class="layout">
+  <mat-sidenav mode="side" opened>
+    <mat-toolbar color="primary">Admin</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="." routerLinkActive="active">Submissions</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>Admin Panel</span>
+    </mat-toolbar>
+    <div class="content">
+      <app-submissions-list></app-submissions-list>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
