@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommunityService, CommunityMember } from '../../services/community.service';
+import { firstValueFrom } from 'rxjs';
+import { CommunityService } from '../../services/community.service';
+import { CommunityMember } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-join-us',
@@ -60,7 +62,7 @@ export class JoinUsComponent {
   }
 
   /**
-   * Submit the join form if it is valid and send data to the API.
+   * Submit the join form if it is valid and send data to Firebase.
    */
   async onSubmit() {
     if (this.joinForm.valid) {
@@ -85,7 +87,7 @@ export class JoinUsComponent {
           isActive: true
         };
 
-        await this.communityService.joinCommunity(memberData);
+        await firstValueFrom(this.communityService.addCommunityMember(memberData));
         this.submitted = true;
       } catch (error: any) {
         this.error = error.message || 'אירעה שגיאה בשליחת הטופס. אנא נסו שוב.';

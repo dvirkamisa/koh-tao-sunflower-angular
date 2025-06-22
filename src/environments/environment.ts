@@ -1,8 +1,17 @@
 /**
  * Development environment settings.
- * Set `apiUrl` to your local backend API base URL.
+ * Firebase configuration for development environment.
  */
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:8000/api'
+  firebase: {
+    apiKey: "AIzaSyD0Ew2pckASelh52xndivK_mvzEGp9GKic",
+    authDomain: "koh-tao-sunflower.firebaseapp.com",
+    databaseURL: "https://koh-tao-sunflower-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "koh-tao-sunflower",
+    storageBucket: "koh-tao-sunflower.firebasestorage.app",
+    messagingSenderId: "849699515710",
+    appId: "1:849699515710:web:9631641787bfdf5df4106f",
+    measurementId: "G-1M00PHRMZW"
+  }
 };

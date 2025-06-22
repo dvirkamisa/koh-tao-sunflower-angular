@@ -1,65 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from './api.service';
-
-export interface CommunityMember {
-  id?: string;
-  name: string;
-  email: string;
-  phone: string;
-  interests: string[];
-  joinDate: string;
-  isActive: boolean;
-}
+import { FirebaseService, CommunityMember } from './firebase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 /**
- * Service for community member operations.
+ * Service for managing community members using Firebase.
  */
 export class CommunityService {
-  constructor(private apiService: ApiService) { }
+  constructor(private firebaseService: FirebaseService) { }
 
   /**
    * Get all community members.
    */
-  getMembers(): Observable<CommunityMember[]> {
-    return this.apiService.get<CommunityMember[]>('/community/members');
+  getCommunityMembers(): Observable<CommunityMember[]> {
+    return this.firebaseService.getCommunityMembers();
   }
 
   /**
-   * Get a specific member by ID.
+   * Add a new community member.
    */
-  getMember(id: string): Observable<CommunityMember> {
-    return this.apiService.get<CommunityMember>(`/community/members/${id}`);
+  addCommunityMember(member: CommunityMember): Observable<CommunityMember> {
+    return this.firebaseService.addCommunityMember(member);
   }
 
   /**
-   * Join the community by sending member data to the backend.
+   * Update an existing community member.
    */
-  joinCommunity(member: CommunityMember): Observable<CommunityMember> {
-    return this.apiService.post<CommunityMember>('/community/join', member);
+  updateCommunityMember(id: string, member: CommunityMember): Observable<CommunityMember> {
+    return this.firebaseService.updateCommunityMember(id, member);
   }
 
   /**
-   * Update member information.
+   * Delete a community member.
    */
-  updateMember(id: string, member: CommunityMember): Observable<CommunityMember> {
-    return this.apiService.put<CommunityMember>(`/community/members/${id}`, member);
-  }
-
-  /**
-   * Deactivate a community member.
-   */
-  deactivateMember(id: string): Observable<void> {
-    return this.apiService.patch<void>(`/community/members/${id}/deactivate`, {});
-  }
-
-  /**
-   * Reactivate a community member.
-   */
-  reactivateMember(id: string): Observable<void> {
-    return this.apiService.patch<void>(`/community/members/${id}/reactivate`, {});
+  deleteCommunityMember(id: string): Observable<void> {
+    return this.firebaseService.deleteCommunityMember(id);
   }
 } 

@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ActivitiesService, ActivityRegistration } from '../../services/activities.service';
+import { firstValueFrom } from 'rxjs';
+import { ActivitiesService } from '../../services/activities.service';
+import { ActivityRegistration } from '../../services/firebase.service';
 
 @Component({
   selector: 'app-register',
@@ -78,16 +80,17 @@ export class RegisterComponent {
         // Create registration data for each selected activity
         const registrations = this.selectedInterests.map(activityId => ({
           activityId: activityId,
-          name: formData.full_name || '',
-          email: formData.email || '',
+          full_name: formData.full_name || '',
           phone: formData.phone || '',
-          message: `${formData.preferred_dates ? 'תאריכים מועדפים: ' + formData.preferred_dates + '\n' : ''}${formData.additional_notes ? 'הערות נוספות: ' + formData.additional_notes : ''}`,
+          email: formData.email || '',
+          preferred_dates: formData.preferred_dates || '',
+          additional_notes: formData.additional_notes || '',
           registrationDate: new Date().toISOString()
         } as ActivityRegistration));
 
         // Register for each activity
         for (const registration of registrations) {
-          await this.activitiesService.registerForActivity(registration).toPromise();
+          await firstValueFrom(this.activitiesService.registerForActivity(registration));
         }
         
         this.submitted = true;

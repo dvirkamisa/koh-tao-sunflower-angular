@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "koh-tao-sunflower-angular"
+location: "us-central1"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "koh-tao-sunflower-angular-fdc"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]
