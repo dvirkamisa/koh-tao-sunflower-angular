@@ -19,7 +19,7 @@ out-tsc/
 **/*.js.map
 
 # Angular environment files
-src/environments/environment*.ts
+# src/environments/environment*.ts
 
 # Angular cache
 .angular/cache/

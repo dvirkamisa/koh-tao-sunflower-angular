@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './why-we-are-here.component.html',
   styleUrls: ['./why-we-are-here.component.scss']
 })
+/**
+ * Section explaining the community activities.
+ */
 export class WhyWeAreHereComponent {
   activities = [
     { icon: 'music_note', text: 'מסיבות תחת כוכבים' },

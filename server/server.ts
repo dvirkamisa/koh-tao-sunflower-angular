@@ -1,4 +1,7 @@
 import express from 'express';
+/**
+ * Entry point for the Express server providing the API.
+ */
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';

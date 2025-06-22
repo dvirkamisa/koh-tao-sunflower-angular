@@ -9,4 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './hero-section.component.html',
   styleUrls: ['./hero-section.component.scss']
 })
-export class HeroSectionComponent {} 
+/**
+ * Displays the landing hero section on the home page.
+ */
+export class HeroSectionComponent {}

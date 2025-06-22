@@ -9,4 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {} 
+/**
+ * Application header displayed on all pages.
+ */
+export class HeaderComponent {}

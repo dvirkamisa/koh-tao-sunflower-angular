@@ -1,4 +1,7 @@
 import express from 'express';
+/**
+ * Routes for activity registration and retrieval.
+ */
 import ActivityRegistration from '../models/ActivityRegistration';
 import nodemailer from 'nodemailer';
 
