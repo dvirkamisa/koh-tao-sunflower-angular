@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { FormSubmissionService } from '../../services/form-submission.service';
 import { JoinUsFormData } from '../../models/form-submission.model';
+import { specialties, Specialty } from './specialties.data';
 
 @Component({
   selector: 'app-join-us',
@@ -32,19 +33,7 @@ export class JoinUsComponent {
   submitted = false;
   error = '';
 
-  specialties = [
-    { value: 'yoga', label: 'יוגה ופילאטיס' },
-    { value: 'diving', label: 'צלילה' },
-    { value: 'music', label: 'מוזיקה והופעות' },
-    { value: 'cooking', label: 'בישול ואוכל' },
-    { value: 'photography', label: 'צילום' },
-    { value: 'massage', label: 'עיסוי ורפואה משלימה' },
-    { value: 'fitness', label: 'כושר גופני' },
-    { value: 'art', label: 'אמנות ויצירה' },
-    { value: 'language', label: 'הוראת שפות' },
-    { value: 'tour_guide', label: 'מדריכי טיולים' },
-    { value: 'other', label: 'אחר' }
-  ];
+  specialties: Specialty[] = specialties;
 
   constructor(
     private fb: FormBuilder,
@@ -73,8 +62,13 @@ export class JoinUsComponent {
         const formData = this.joinForm.value;
         
         // If specialty is 'other', use the specialty_other value
+        let specialtyLabel = '';
         if (formData.specialty === 'other' && formData.specialty_other) {
-          formData.specialty = formData.specialty_other;
+          specialtyLabel = formData.specialty_other;
+        } else {
+          // Find the label in specialties array
+          const found = this.specialties.find(s => s.value === formData.specialty);
+          specialtyLabel = found?.label ?? '';
         }
         
         // Transform form data to match JoinUsFormData interface
@@ -82,7 +76,7 @@ export class JoinUsComponent {
           full_name: formData.full_name || '',
           phone: formData.phone || '',
           email: formData.email || '',
-          specialty: formData.specialty || '',
+          specialty: specialtyLabel || '',
           specialty_other: formData.specialty_other || '',
           experience: formData.experience || '',
           availability: formData.availability || ''
