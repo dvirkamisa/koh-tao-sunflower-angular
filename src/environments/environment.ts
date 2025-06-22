@@ -4,6 +4,7 @@
  */
 export const environment = {
   production: false,
+  adminToken: 'koh-tao-sunflower-admin-2024', // Change this in production
   firebase: {
     apiKey: "AIzaSyD0Ew2pckASelh52xndivK_mvzEGp9GKic",
     authDomain: "koh-tao-sunflower.firebaseapp.com",

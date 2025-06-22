@@ -4,8 +4,8 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { CommunityService } from '../../services/community.service';
-import { CommunityMember } from '../../services/firebase.service';
+import { FormSubmissionService } from '../../services/form-submission.service';
+import { JoinUsFormData } from '../../models/form-submission.model';
 
 @Component({
   selector: 'app-join-us',
@@ -48,7 +48,7 @@ export class JoinUsComponent {
 
   constructor(
     private fb: FormBuilder,
-    private communityService: CommunityService
+    private formSubmissionService: FormSubmissionService
   ) {
     this.joinForm = this.fb.group({
       full_name: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(2)]),
@@ -77,17 +77,18 @@ export class JoinUsComponent {
           formData.specialty = formData.specialty_other;
         }
         
-        // Transform form data to match CommunityMember interface
-        const memberData: CommunityMember = {
-          name: formData.full_name || '',
-          email: formData.email || '',
+        // Transform form data to match JoinUsFormData interface
+        const submissionData: JoinUsFormData = {
+          full_name: formData.full_name || '',
           phone: formData.phone || '',
-          interests: [formData.specialty || ''],
-          joinDate: new Date().toISOString(),
-          isActive: true
+          email: formData.email || '',
+          specialty: formData.specialty || '',
+          specialty_other: formData.specialty_other || '',
+          experience: formData.experience || '',
+          availability: formData.availability || ''
         };
 
-        await firstValueFrom(this.communityService.addCommunityMember(memberData));
+        await firstValueFrom(this.formSubmissionService.submitJoinUsForm(submissionData));
         this.submitted = true;
       } catch (error: any) {
         this.error = error.message || 'אירעה שגיאה בשליחת הטופס. אנא נסו שוב.';

@@ -4,8 +4,8 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
-import { ActivitiesService } from '../../services/activities.service';
-import { ActivityRegistration } from '../../services/firebase.service';
+import { FormSubmissionService } from '../../services/form-submission.service';
+import { RegisterActivityFormData } from '../../models/form-submission.model';
 
 @Component({
   selector: 'app-register',
@@ -43,7 +43,7 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
-    private activitiesService: ActivitiesService
+    private formSubmissionService: FormSubmissionService
   ) {
     this.registerForm = this.fb.group({
       full_name: this.fb.nonNullable.control('', [Validators.required, Validators.minLength(2)]),
@@ -77,22 +77,17 @@ export class RegisterComponent {
       try {
         const formData = this.registerForm.value;
         
-        // Create registration data for each selected activity
-        const registrations = this.selectedInterests.map(activityId => ({
-          activityId: activityId,
+        // Transform form data to match RegisterActivityFormData interface
+        const submissionData: RegisterActivityFormData = {
           full_name: formData.full_name || '',
           phone: formData.phone || '',
           email: formData.email || '',
+          selectedActivities: this.selectedInterests,
           preferred_dates: formData.preferred_dates || '',
-          additional_notes: formData.additional_notes || '',
-          registrationDate: new Date().toISOString()
-        } as ActivityRegistration));
+          additional_notes: formData.additional_notes || ''
+        };
 
-        // Register for each activity
-        for (const registration of registrations) {
-          await firstValueFrom(this.activitiesService.registerForActivity(registration));
-        }
-        
+        await firstValueFrom(this.formSubmissionService.submitRegisterActivityForm(submissionData));
         this.submitted = true;
       } catch (error: any) {
         this.error = error.message || 'אירעה שגיאה בשליחת הטופס. אנא נסו שוב.';
