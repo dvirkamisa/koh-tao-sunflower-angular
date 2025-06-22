@@ -17,12 +17,12 @@ export class ApiService {
   /**
    * Perform a GET request to the given endpoint.
    */
-  get<T>(endpoint: string, params?: Record<string, unknown>): Observable<T> {
+  get<T>(endpoint: string, params?: Record<string, string | number | boolean>): Observable<T> {
     let httpParams = new HttpParams();
     if (params) {
       Object.keys(params).forEach(key => {
         if (params[key] !== null && params[key] !== undefined) {
-          httpParams = httpParams.set(key, params[key]);
+          httpParams = httpParams.set(key, params[key] as string | number | boolean);
         }
       });
     }

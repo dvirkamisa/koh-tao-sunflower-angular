@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CommunityService } from '../../services/community.service';
+import { CommunityService, CommunityMember } from '../../services/community.service';
 
 @Component({
   selector: 'app-join-us',
@@ -71,14 +71,21 @@ export class JoinUsComponent {
         const formData = this.joinForm.value;
         
         // If specialty is 'other', use the specialty_other value
-        if (formData.specialty === 'other') {
+        if (formData.specialty === 'other' && formData.specialty_other) {
           formData.specialty = formData.specialty_other;
         }
         
-        // Remove specialty_other from the data
-        delete formData.specialty_other;
+        // Transform form data to match CommunityMember interface
+        const memberData: CommunityMember = {
+          name: formData.full_name || '',
+          email: formData.email || '',
+          phone: formData.phone || '',
+          interests: [formData.specialty || ''],
+          joinDate: new Date().toISOString(),
+          isActive: true
+        };
 
-        await this.communityService.joinCommunity(formData);
+        await this.communityService.joinCommunity(memberData);
         this.submitted = true;
       } catch (error: any) {
         this.error = error.message || 'אירעה שגיאה בשליחת הטופס. אנא נסו שוב.';
