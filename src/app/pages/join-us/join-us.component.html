@@ -1,0 +1,163 @@
+<div class="join-page" *ngIf="!submitted">
+  <div class="container">
+    <div class="page-header">
+      <div class="header-icon">
+        <span class="material-icons">auto_awesome</span>
+      </div>
+      
+      <h1>יש לכם כישרון? אנחנו רוצים אתכם!</h1>
+      
+      <p class="header-description">
+        הצטרפו לקהילה הכי חמה בקו טאו ותעזרו לנו ליצור חוויות בלתי נשכחות
+      </p>
+      
+      <div class="header-divider"></div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-header">
+        <h2>
+          <span class="material-icons">group</span>
+          טופס הצטרפות לקהילה
+        </h2>
+      </div>
+      
+      <div class="form-content">
+        <div class="alert error" *ngIf="error">
+          {{ error }}
+        </div>
+
+        <form [formGroup]="joinForm" (ngSubmit)="onSubmit()" class="join-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="full_name">שם מלא *</label>
+              <input
+                id="full_name"
+                type="text"
+                formControlName="full_name"
+                placeholder="השם המלא שלכם"
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">טלפון/WhatsApp *</label>
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="+66 656-103-279"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">אימייל</label>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="your.email@example.com"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="specialty">התמחות/כישרון *</label>
+            <select
+              id="specialty"
+              formControlName="specialty"
+              class="form-control"
+            >
+              <option value="">בחרו את התחום שלכם</option>
+              <option *ngFor="let specialty of specialties" [value]="specialty.value">
+                {{ specialty.label }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group" *ngIf="joinForm.get('specialty')?.value === 'other'">
+            <label for="specialty_other">פרטו את התחום שלכם</label>
+            <input
+              id="specialty_other"
+              type="text"
+              formControlName="specialty_other"
+              placeholder="תארו את הכישרון או ההתמחות שלכם"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="experience">ניסיון קודם</label>
+            <textarea
+              id="experience"
+              formControlName="experience"
+              placeholder="ספרו לנו על הניסיון שלכם בתחום..."
+              rows="4"
+              class="form-control"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="availability">מתי זמינים</label>
+            <textarea
+              id="availability"
+              formControlName="availability"
+              placeholder="מתי אתם זמינים? איזה ימים/שעות?"
+              rows="3"
+              class="form-control"
+            ></textarea>
+          </div>
+
+          <button 
+            type="submit" 
+            class="submit-btn"
+            [disabled]="isSubmitting || !joinForm.valid"
+          >
+            <span class="material-icons" *ngIf="!isSubmitting">send</span>
+            <span *ngIf="isSubmitting">שולח...</span>
+            בואו נעשה קסמים יחד!
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Page -->
+<div class="success-page" *ngIf="submitted">
+  <div class="container">
+    <div class="success-card">
+      <div class="success-icon">
+        <span class="material-icons">check_circle</span>
+      </div>
+      
+      <h2>תודה רבה! 🎉</h2>
+      
+      <p class="success-message">
+        קיבלנו את הבקשה שלכם והיא כבר בטיפול
+      </p>
+      
+      <p class="success-note">
+        נחזור אליכם בהקדם דרך WhatsApp או טלפון
+      </p>
+
+      <div class="success-actions">
+        <a routerLink="/" class="btn-primary">
+          <span class="material-icons">arrow_back</span>
+          חזרה לעמוד הראשי
+        </a>
+        
+        <a 
+          href="https://wa.me/+66656103279" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="btn-secondary"
+        >
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div> 

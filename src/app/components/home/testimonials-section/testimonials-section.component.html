@@ -1,0 +1,75 @@
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>מה אומרים עלינו?</h2>
+      <p class="section-subtitle">הקהילה שלנו מדברת בעד עצמיה</p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="testimonial-container">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <div class="avatar-container">
+            <div class="avatar">{{ testimonials[currentIndex].avatar }}</div>
+            <span class="material-icons quote-icon">format_quote</span>
+          </div>
+          
+          <blockquote class="testimonial-text">
+            "{{ testimonials[currentIndex].text }}"
+          </blockquote>
+          
+          <div class="testimonial-footer">
+            <div class="stars">
+              <span 
+                *ngFor="let star of getStars(testimonials[currentIndex].rating)" 
+                class="material-icons star"
+              >
+                star
+              </span>
+            </div>
+            
+            <p class="testimonial-name">{{ testimonials[currentIndex].name }}</p>
+            <p class="testimonial-activity">{{ testimonials[currentIndex].activity }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="navigation">
+        <button class="nav-btn" (click)="prevTestimonial()">
+          <span class="material-icons">chevron_right</span>
+        </button>
+
+        <div class="dots">
+          <button 
+            *ngFor="let testimonial of testimonials; let i = index"
+            class="dot"
+            [class.active]="i === currentIndex"
+            (click)="setCurrentIndex(i)"
+          ></button>
+        </div>
+
+        <button class="nav-btn" (click)="nextTestimonial()">
+          <span class="material-icons">chevron_left</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- WhatsApp-style testimonials preview -->
+    <div class="whatsapp-section">
+      <h3>הודעות תודה מהקהילה</h3>
+      <div class="messages-grid">
+        <div 
+          *ngFor="let message of whatsappMessages; let i = index" 
+          class="message-card"
+        >
+          <p class="message-text">{{ message.text }}</p>
+          <div class="message-footer">
+            <span class="sender">{{ message.sender }}</span>
+            <span class="time">{{ message.time }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

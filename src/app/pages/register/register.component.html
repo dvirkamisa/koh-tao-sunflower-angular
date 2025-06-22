@@ -1,0 +1,149 @@
+<div class="register-page" *ngIf="!submitted">
+  <div class="container">
+    <div class="page-header">
+      <div class="header-icon">
+        <span class="material-icons">event</span>
+      </div>
+      
+      <h1>מוכנים לחוויה בלתי נשכחת?</h1>
+      
+      <p class="header-description">
+        בחרו את הפעילויות שמעניינות אתכם ואנחנו נדאג לשאר
+      </p>
+      
+      <div class="header-divider"></div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-header">
+        <h2>
+          <span class="material-icons">auto_awesome</span>
+          הרשמה לפעילויות
+        </h2>
+      </div>
+      
+      <div class="form-content">
+        <div class="alert error" *ngIf="error">
+          {{ error }}
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="full_name">שם מלא *</label>
+              <input
+                id="full_name"
+                type="text"
+                formControlName="full_name"
+                placeholder="השם המלא שלכם"
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">טלפון/WhatsApp *</label>
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                placeholder="+66 656-103-279"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="interests-section">
+            <label class="interests-label">מה מעניין אתכם? *</label>
+            <div class="interests-grid">
+              <div 
+                *ngFor="let activity of activities" 
+                class="interest-item"
+                [class.selected]="isActivitySelected(activity.id)"
+              >
+                <label class="interest-label">
+                  <input
+                    type="checkbox"
+                    [value]="activity.id"
+                    (change)="onInterestChange($event, activity.id)"
+                    class="interest-checkbox"
+                  />
+                  <span class="activity-icon">{{ activity.icon }}</span>
+                  <span class="activity-name">{{ activity.label }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="preferred_dates">תאריכים מועדפים</label>
+            <textarea
+              id="preferred_dates"
+              formControlName="preferred_dates"
+              placeholder="מתי אתם מתכננים להיות בקו טאו? איזה תאריכים?"
+              rows="3"
+              class="form-control"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="additional_notes">הערות נוספות</label>
+            <textarea
+              id="additional_notes"
+              formControlName="additional_notes"
+              placeholder="האם יש משהו נוסף שתרצו לספר לנו?"
+              rows="4"
+              class="form-control"
+            ></textarea>
+          </div>
+
+          <button 
+            type="submit" 
+            class="submit-btn"
+            [disabled]="isSubmitting || !registerForm.valid || selectedInterests.length === 0"
+          >
+            <span class="material-icons" *ngIf="!isSubmitting">rocket_launch</span>
+            <span *ngIf="isSubmitting">שולח...</span>
+            בואו נתחיל את ההרפתקה!
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Page -->
+<div class="success-page" *ngIf="submitted">
+  <div class="container">
+    <div class="success-card">
+      <div class="success-icon">
+        <span class="material-icons">check_circle</span>
+      </div>
+      
+      <h2>ההרשמה התקבלה! 🎉</h2>
+      
+      <p class="success-message">
+        נתחיל לתכנן את ההרפתקאות שלכם
+      </p>
+      
+      <p class="success-note">
+        נחזור אליכם בהקדם עם פרטי הפעילויות דרך WhatsApp
+      </p>
+
+      <div class="success-actions">
+        <a routerLink="/" class="btn-primary">
+          <span class="material-icons">arrow_back</span>
+          חזרה לעמוד הראשי
+        </a>
+        
+        <a 
+          href="https://wa.me/+66656103279" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="btn-secondary"
+        >
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div> 

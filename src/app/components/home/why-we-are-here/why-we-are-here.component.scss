@@ -1,0 +1,128 @@
+.why-section {
+  padding: 5rem 0;
+  background: linear-gradient(135deg, white, var(--light-blue), #f0f9ff);
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  
+  h2 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+}
+
+.section-divider {
+  width: 6rem;
+  height: 0.25rem;
+  background: linear-gradient(135deg, var(--tropical-blue), var(--jungle-green));
+  margin: 0 auto 2rem;
+}
+
+.content-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+  
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.description {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.quote-box {
+  background: linear-gradient(135deg, #fef3c7, #fed7aa);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border-right: 4px solid var(--sun-yellow);
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.quote-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  font-style: italic;
+  margin: 0;
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.activity-card {
+  background: linear-gradient(135deg, white, var(--light-blue));
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    
+    .activity-icon {
+      background: linear-gradient(135deg, var(--sun-yellow), var(--sunset-orange));
+    }
+  }
+}
+
+.activity-icon {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  background: linear-gradient(135deg, var(--tropical-blue), var(--jungle-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  
+  .material-icons {
+    font-size: 2rem;
+    color: white;
+  }
+}
+
+.activity-text {
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+} 

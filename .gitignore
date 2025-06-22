@@ -1,0 +1,75 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+.pnpm-debug.log
+
+# Output directories
+dist/
+build/
+tmp/
+out-tsc/
+.angular/
+
+# Compiled JavaScript files
+**/*.js
+**/*.js.map
+
+# Angular environment files
+src/environments/environment*.ts
+
+# Angular cache
+.angular/cache/
+.angular/local/
+
+# Coverage and testing
+coverage/
+test-output/
+*.lcov
+
+# Editor folders
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# ESLint/Prettier cache
+.eslintcache
+.prettiercache
+
+# Misc build artifacts
+*.tgz
+*.bak
+*.swp
+*.swo
+*.orig
+*.tmp
+*.temp
+
+# Firebase, Docker, or other cloud tools (optional — if used)
+.firebaserc
+firebase.json
+*.firebase
+functions/lib/
+functions/node_modules/
+
+# Nx or Monorepo support (optional — if you're using Nx)
+nx-report.json
+.project.json
+workspace.json
+.project-graph/
+node_modules/.cache/

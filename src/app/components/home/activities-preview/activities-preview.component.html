@@ -1,0 +1,37 @@
+<section class="activities-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>חוויות שמחכות לכם</h2>
+      <p class="section-subtitle">
+        כל פעילות היא הזדמנות לחוויה חדשה ולחברויות לכל החיים
+      </p>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="activities-grid">
+      <div 
+        *ngFor="let activity of activities; let i = index" 
+        class="activity-card"
+        [class]="activity.bgClass"
+      >
+        <div class="card-header">
+          <div class="activity-icon" [class]="activity.colorClass">
+            <span class="material-icons">{{ activity.icon }}</span>
+          </div>
+          <h3 class="activity-title">{{ activity.title }}</h3>
+        </div>
+        <div class="card-content">
+          <p class="activity-description">{{ activity.description }}</p>
+          <span class="badge">בקרוב פרטים נוספים</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-container">
+      <a routerLink="/register" class="cta-button">
+        הרשמה לפעילויות
+        <span class="material-icons">arrow_back</span>
+      </a>
+    </div>
+  </div>
+</section> 

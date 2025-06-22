@@ -1,0 +1,45 @@
+<section class="why-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>למה אנחנו כאן?</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="content-grid">
+      <div class="text-content">
+        <p class="description">
+          דמיינו שאתם רוקדים תחת השמיים זרועי הכוכבים, המוזיקה בועטת, והאנרגיה מתפוצצת ברחבה. 
+          הבוקר עולה, ואתם נמתחים על המזרן לאימון יוגה מול הים, הנשימות מתמזגות עם הגלים.
+        </p>
+        
+        <p class="description">
+          אחר כך, אתם קופצים למים, צוללים בין אלמוגים ודגים צבעוניים, הלב דופק מהתרגשות. 
+          ובערב, הגיטרה מנגנת, הקהל שר יחד, והלב מתמלא מהחום של ההופעה החיה.
+        </p>
+        
+        <p class="description">
+          כשאתם צריכים רגע של רוגע, אמבטיית קרח וסאונה יבשה מרעננים את הגוף והנפש לצד נופים ירוקים בלב ג'ונגל טרופי. 
+          ומשם עם אופנוע ורוח על הפנים, אתם דוהרים לגלות פינות נסתרות של גן עדן.
+        </p>
+        
+        <div class="quote-box">
+          <p class="quote-text">
+            "כל רגע הוא הרפתקה, וכל שנייה היא זיכרון שתיקחו איתכם לנצח."
+          </p>
+        </div>
+      </div>
+
+      <div class="activities-grid">
+        <div 
+          *ngFor="let activity of activities; let i = index" 
+          class="activity-card"
+        >
+          <div class="activity-icon">
+            <span class="material-icons">{{ activity.icon }}</span>
+          </div>
+          <p class="activity-text">{{ activity.text }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 
