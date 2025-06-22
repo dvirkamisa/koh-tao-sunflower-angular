@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
@@ -13,7 +13,7 @@ import { SubmissionsListComponent } from '../../admin/components/submissions-lis
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
+    RouterModule,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,

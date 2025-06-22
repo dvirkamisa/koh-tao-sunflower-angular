@@ -4,7 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { FormSubmissionService } from '../../../services/form-submission.service';
 import { FormSubmission } from '../../../models/form-submission.model';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-submissions-list',
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./submissions-list.component.scss']
 })
 export class SubmissionsListComponent implements OnInit {
-  submissions$: Observable<FormSubmission[]> | undefined;
+  submissions$: Observable<FormSubmission[]> = of([]);
   displayedColumns = ['id', 'formType', 'userIdentity', 'timestamp', 'status', 'actions'];
 
   constructor(private submissions: FormSubmissionService) {}
