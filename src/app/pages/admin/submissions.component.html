@@ -1,39 +1,192 @@
-<div class="submissions-header">
-  <button mat-flat-button color="primary" (click)="openAddDialog()">
-    <mat-icon>add</mat-icon>
-    הוסף
-  </button>
-</div>
-<div class="content">
-  <table mat-table [dataSource]="submissions" class="mat-elevation-z1" multiTemplateDataRows>
-        <ng-container matColumnDef="user">
-          <th mat-header-cell *matHeaderCellDef>משתמש</th>
-          <td mat-cell *matCellDef="let s">{{ s.userIdentity }}</td>
-        </ng-container>
-        <ng-container matColumnDef="formType">
-          <th mat-header-cell *matHeaderCellDef>טופס</th>
-          <td mat-cell *matCellDef="let s">{{ s.formName }}</td>
-        </ng-container>
-        <ng-container matColumnDef="timestamp">
-          <th mat-header-cell *matHeaderCellDef>תאריך</th>
-          <td mat-cell *matCellDef="let s">{{ s.timestamp | date:'short' }}</td>
-        </ng-container>
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef>סטטוס</th>
-          <td mat-cell *matCellDef="let s">{{ s.status }}</td>
-        </ng-container>
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>פעולות</th>
-          <td mat-cell *matCellDef="let s">
-            <button mat-icon-button color="primary" (click)="markProcessed(s)">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteSubmission(s.id!)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+<div class="submissions-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-left">
+        <h1 class="page-title">הגשות</h1>
+        <p class="page-subtitle">ניהול כל ההגשות והטפסים</p>
+      </div>
+      <div class="header-right">
+        <button mat-flat-button color="primary" class="add-btn" (click)="openAddDialog()">
+          <mat-icon>add</mat-icon>
+          הוסף הגשה חדשה
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon pending">
+          <mat-icon>schedule</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">{{ getPendingCount() }}</h3>
+          <p class="stat-label">ממתינות</p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon approved">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">{{ getApprovedCount() }}</h3>
+          <p class="stat-label">אושרו</p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon rejected">
+          <mat-icon>cancel</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">{{ getRejectedCount() }}</h3>
+          <p class="stat-label">נדחו</p>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon total">
+          <mat-icon>assignment</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">{{ submissions.length }}</h3>
+          <p class="stat-label">סה"כ הגשות</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Submissions Table -->
+  <mat-card class="table-card">
+    <mat-card-header>
+      <mat-card-title>רשימת הגשות</mat-card-title>
+      <mat-card-subtitle>כל ההגשות והטפסים שהתקבלו</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="submissions" class="submissions-table" multiTemplateDataRows>
+          <!-- User Column -->
+          <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef class="table-header">
+              <div class="header-content">
+                <mat-icon>person</mat-icon>
+                <span>משתמש</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let submission" class="user-cell">
+              <div class="user-info">
+                <div class="user-avatar">
+                  <mat-icon>account_circle</mat-icon>
+                </div>
+                <div class="user-details">
+                  <span class="user-name">{{ submission.userIdentity }}</span>
+                  <span class="user-email" *ngIf="submission.data.email">{{ submission.data.email }}</span>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Form Type Column -->
+          <ng-container matColumnDef="formType">
+            <th mat-header-cell *matHeaderCellDef class="table-header">
+              <div class="header-content">
+                <mat-icon>description</mat-icon>
+                <span>סוג טופס</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let submission" class="form-type-cell">
+              <div class="form-type-badge" [class]="submission.formType">
+                <mat-icon>{{ getFormTypeIcon(submission.formType) }}</mat-icon>
+                <span>{{ submission.formName }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Timestamp Column -->
+          <ng-container matColumnDef="timestamp">
+            <th mat-header-cell *matHeaderCellDef class="table-header">
+              <div class="header-content">
+                <mat-icon>schedule</mat-icon>
+                <span>תאריך</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let submission" class="timestamp-cell">
+              <div class="timestamp-info">
+                <span class="date">{{ submission.timestamp | date:'shortDate' }}</span>
+                <span class="time">{{ submission.timestamp | date:'shortTime' }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef class="table-header">
+              <div class="header-content">
+                <mat-icon>flag</mat-icon>
+                <span>סטטוס</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let submission" class="status-cell">
+              <div class="status-badge" [class]="submission.status">
+                <mat-icon>{{ getStatusIcon(submission.status) }}</mat-icon>
+                <span>{{ getStatusText(submission.status) }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Actions Column -->
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="table-header">
+              <div class="header-content">
+                <mat-icon>settings</mat-icon>
+                <span>פעולות</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let submission" class="actions-cell">
+              <div class="action-buttons">
+                <button mat-icon-button 
+                        color="primary" 
+                        class="action-btn approve-btn"
+                        (click)="markProcessed(submission)"
+                        [disabled]="submission.status === 'approved'"
+                        matTooltip="אשר הגשה">
+                  <mat-icon>check</mat-icon>
+                </button>
+                
+                <button mat-icon-button 
+                        color="warn" 
+                        class="action-btn delete-btn"
+                        (click)="deleteSubmission(submission.id!)"
+                        matTooltip="מחק הגשה">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                
+                <button mat-icon-button 
+                        color="accent" 
+                        class="action-btn view-btn"
+                        (click)="viewSubmission(submission)"
+                        matTooltip="צפה בפרטים">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>

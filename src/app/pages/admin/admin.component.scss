@@ -1,14 +1,278 @@
+// Variables
+$primary-color: #1976d2;
+$primary-light: #42a5f5;
+$primary-dark: #1565c0;
+$accent-color: #ff9800;
+$success-color: #4caf50;
+$warning-color: #ff9800;
+$error-color: #f44336;
+$text-primary: #212121;
+$text-secondary: #757575;
+$background-light: #fafafa;
+$background-dark: #f5f5f5;
+$border-color: #e0e0e0;
+$shadow-light: 0 2px 4px rgba(0,0,0,0.1);
+$shadow-medium: 0 4px 8px rgba(0,0,0,0.12);
+$shadow-heavy: 0 8px 16px rgba(0,0,0,0.15);
+
+// Main Container
 .admin-container {
-  height: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
+
+// Sidebar Styles
 .admin-sidenav {
-  width: 200px;
+  width: 280px;
+  background: linear-gradient(180deg, #1976d2 0%, #1565c0 100%);
+  border: none;
+  box-shadow: $shadow-heavy;
+  
+  .sidenav-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    
+    .brand-section {
+      text-align: center;
+      
+      .logo-container {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 16px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .logo-icon {
+          font-size: 32px;
+          color: white;
+        }
+      }
+      
+      .brand-name {
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0 0 4px;
+        text-align: center;
+      }
+      
+      .brand-subtitle {
+        color: rgba(255,255,255,0.8);
+        font-size: 12px;
+        margin: 0;
+        text-align: center;
+      }
+    }
+  }
+  
+  .user-profile {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .user-avatar {
+      width: 48px;
+      height: 48px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      mat-icon {
+        color: white;
+        font-size: 24px;
+      }
+    }
+    
+    .user-info {
+      flex: 1;
+      
+      .user-name {
+        color: white;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0 0 2px;
+      }
+      
+      .user-role {
+        color: rgba(255,255,255,0.7);
+        font-size: 12px;
+        margin: 0;
+      }
+    }
+  }
+  
+  .nav-menu {
+    padding: 16px 0;
+    
+    .nav-item {
+      margin: 4px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: rgba(255,255,255,0.1);
+      }
+      
+      &.active {
+        background: rgba(255,255,255,0.2);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        
+        mat-icon {
+          color: white;
+        }
+        
+        span {
+          color: white;
+          font-weight: 500;
+        }
+      }
+      
+      mat-icon {
+        color: rgba(255,255,255,0.8);
+        margin-right: 12px;
+      }
+      
+      span {
+        color: rgba(255,255,255,0.9);
+        font-size: 14px;
+      }
+      
+      .badge {
+        background: $accent-color;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 11px;
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .sidenav-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: auto;
+    
+    .logout-btn {
+      width: 100%;
+      color: rgba(255,255,255,0.8);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: rgba(255,255,255,0.1);
+        color: white;
+      }
+      
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
 }
-.toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 1;
+
+// Main Content Area
+.main-content {
+  background: $background-light;
+  
+  .top-toolbar {
+    background: white;
+    box-shadow: $shadow-light;
+    border-bottom: 1px solid $border-color;
+    padding: 0 24px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      
+      .menu-toggle {
+        color: $text-primary;
+        
+        &:hover {
+          background: rgba(0,0,0,0.04);
+        }
+      }
+      
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        
+        .breadcrumb-item {
+          color: $text-secondary;
+          font-size: 14px;
+          
+          &.active {
+            color: $primary-color;
+            font-weight: 500;
+          }
+        }
+        
+        .breadcrumb-separator {
+          font-size: 16px;
+          color: $text-secondary;
+        }
+      }
+    }
+    
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      .notification-btn, .profile-btn {
+        color: $text-primary;
+        
+        &:hover {
+          background: rgba(0,0,0,0.04);
+        }
+      }
+    }
+  }
+  
+  .page-content {
+    padding: 24px;
+    min-height: calc(100vh - 64px);
+  }
 }
-.content {
-  padding: 1rem;
+
+// Responsive Design
+@media (max-width: 768px) {
+  .admin-sidenav {
+    width: 240px;
+  }
+  
+  .top-toolbar {
+    padding: 0 16px;
+    
+    .breadcrumb {
+      display: none;
+    }
+  }
+  
+  .page-content {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-sidenav {
+    width: 100%;
+  }
+  
+  .page-content {
+    padding: 12px;
+  }
 }

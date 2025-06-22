@@ -9,6 +9,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormSubmissionService } from '../../services/form-submission.service';
 import { FormSubmission, JoinUsFormData } from '../../models/form-submission.model';
 
@@ -25,7 +27,9 @@ import { FormSubmission, JoinUsFormData } from '../../models/form-submission.mod
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
+    MatTooltipModule
   ],
   templateUrl: './submissions.component.html',
   styleUrls: ['./submissions.component.scss']
@@ -37,7 +41,6 @@ export class SubmissionsComponent implements OnInit {
   private service = inject(FormSubmissionService);
   private snackBar = inject(MatSnackBar);
   private dialog = inject(MatDialog);
-  private fb = inject(FormBuilder);
 
   ngOnInit() {
     this.loadSubmissions();
@@ -58,7 +61,7 @@ export class SubmissionsComponent implements OnInit {
 
   markProcessed(submission: FormSubmission) {
     if (!submission.id) return;
-    this.service.updateSubmission(submission.id, { status: 'processed' }).subscribe(() => {
+    this.service.updateSubmission(submission.id, { status: 'approved' }).subscribe(() => {
       this.snackBar.open('העודכן', 'סגור', { duration: 2000 });
       this.loadSubmissions();
     });
@@ -74,6 +77,52 @@ export class SubmissionsComponent implements OnInit {
         this.loadSubmissions();
       }
     });
+  }
+
+  // Statistics methods
+  getPendingCount(): number {
+    return this.submissions.filter(s => s.status === 'pending').length;
+  }
+
+  getApprovedCount(): number {
+    return this.submissions.filter(s => s.status === 'approved').length;
+  }
+
+  getRejectedCount(): number {
+    return this.submissions.filter(s => s.status === 'rejected').length;
+  }
+
+  // UI Helper methods
+  getFormTypeIcon(formType: string): string {
+    const icons: { [key: string]: string } = {
+      'join-us': 'person_add',
+      'register-activity': 'event'
+    };
+    return icons[formType] || 'description';
+  }
+
+  getStatusIcon(status: string): string {
+    const icons: { [key: string]: string } = {
+      'pending': 'schedule',
+      'approved': 'check_circle',
+      'rejected': 'cancel'
+    };
+    return icons[status] || 'help';
+  }
+
+  getStatusText(status: string): string {
+    const texts: { [key: string]: string } = {
+      'pending': 'ממתין',
+      'approved': 'אושר',
+      'rejected': 'נדחה'
+    };
+    return texts[status] || status;
+  }
+
+  viewSubmission(submission: FormSubmission) {
+    // TODO: Implement view submission dialog
+    console.log('View submission:', submission);
+    this.snackBar.open('פונקציונליות צפייה תתווסף בקרוב', 'סגור', { duration: 2000 });
   }
 }
 
@@ -114,19 +163,20 @@ export class SubmissionsComponent implements OnInit {
   ]
 })
 export class AddSubmissionDialogComponent {
+  private fb = inject(FormBuilder);
+  private service = inject(FormSubmissionService);
+  private dialogRef = inject(MatDialog);
+
   form = this.fb.nonNullable.group({
     full_name: ['', Validators.required],
     phone: ['', Validators.required],
     email: ['']
   });
-  private fb = inject(FormBuilder);
-  private service = inject(FormSubmissionService);
-  private dialogRef = inject(MatDialog);
 
   submit() {
     const data: JoinUsFormData = {
-      full_name: this.form.value.full_name,
-      phone: this.form.value.phone,
+      full_name: this.form.value.full_name!,
+      phone: this.form.value.phone!,
       email: this.form.value.email || '',
       specialty: 'other',
       availability: '',
