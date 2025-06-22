@@ -1,0 +1,94 @@
+<mat-sidenav-container class="admin-container">
+  <!-- Sidebar -->
+  <mat-sidenav #sidenav mode="side" opened class="admin-sidenav" [fixedInViewport]="true">
+    <!-- Logo/Brand Section -->
+    <div class="sidenav-header">
+      <div class="brand-section">
+        <div class="logo-container">
+          <mat-icon class="logo-icon">eco</mat-icon>
+        </div>
+        <h2 class="brand-name">קו טאו סאנפלואר</h2>
+        <p class="brand-subtitle">לוח ניהול</p>
+      </div>
+    </div>
+
+    <!-- User Profile Section -->
+    <div class="user-profile">
+      <div class="user-avatar">
+        <mat-icon>account_circle</mat-icon>
+      </div>
+      <div class="user-info">
+        <h4 class="user-name">מנהל המערכת</h4>
+        <p class="user-role">Administrator</p>
+      </div>
+    </div>
+
+    <!-- Navigation Menu -->
+    <mat-nav-list class="nav-menu">
+      <a mat-list-item routerLink="dashboard" routerLinkActive="active" class="nav-item">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>דשבורד</span>
+      </a>
+      
+      <a mat-list-item routerLink="submissions" routerLinkActive="active" class="nav-item">
+        <mat-icon matListItemIcon>assignment</mat-icon>
+        <span matListItemTitle>הגשות</span>
+        <span matListItemMeta class="badge">12</span>
+      </a>
+      
+      <a mat-list-item routerLink="activities" routerLinkActive="active" class="nav-item">
+        <mat-icon matListItemIcon>event</mat-icon>
+        <span matListItemTitle>פעילויות</span>
+      </a>
+      
+      <a mat-list-item routerLink="members" routerLinkActive="active" class="nav-item">
+        <mat-icon matListItemIcon>people</mat-icon>
+        <span matListItemTitle>חברי קהילה</span>
+      </a>
+      
+      <a mat-list-item routerLink="settings" routerLinkActive="active" class="nav-item">
+        <mat-icon matListItemIcon>settings</mat-icon>
+        <span matListItemTitle>הגדרות</span>
+      </a>
+    </mat-nav-list>
+
+    <!-- Bottom Section -->
+    <div class="sidenav-footer">
+      <button mat-button class="logout-btn" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>התנתק</span>
+      </button>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main Content Area -->
+  <mat-sidenav-content class="main-content">
+    <!-- Top Toolbar -->
+    <mat-toolbar class="top-toolbar">
+      <div class="toolbar-left">
+        <button mat-icon-button (click)="sidenav.toggle()" class="menu-toggle">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <div class="breadcrumb">
+          <span class="breadcrumb-item">לוח ניהול</span>
+          <mat-icon class="breadcrumb-separator">chevron_right</mat-icon>
+          <span class="breadcrumb-item active">{{ getCurrentPageTitle() }}</span>
+        </div>
+      </div>
+      
+      <div class="toolbar-right">
+        <button mat-icon-button class="notification-btn">
+          <mat-icon [matBadge]="3" matBadgeColor="warn">notifications</mat-icon>
+        </button>
+        <button mat-icon-button class="profile-btn">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+
+    <!-- Page Content -->
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

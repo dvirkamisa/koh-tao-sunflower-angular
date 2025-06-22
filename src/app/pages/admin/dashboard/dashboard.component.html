@@ -1,0 +1,212 @@
+<div class="dashboard-page">
+  <!-- Welcome Section -->
+  <div class="welcome-section">
+    <div class="welcome-content">
+      <div class="welcome-text">
+        <h1 class="welcome-title">ברוכים הבאים ללוח הניהול</h1>
+        <p class="welcome-subtitle">ניהול קהילת קו טאו סאנפלואר</p>
+      </div>
+      <div class="welcome-actions">
+        <button mat-flat-button color="primary" class="quick-action-btn">
+          <mat-icon>add</mat-icon>
+          הוסף פעילות חדשה
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats -->
+  <div class="quick-stats-grid">
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon members">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">156</h3>
+          <p class="stat-label">חברי קהילה</p>
+          <span class="stat-change positive">+12% מהחודש שעבר</span>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon activities">
+          <mat-icon>event</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">24</h3>
+          <p class="stat-label">פעילויות פעילות</p>
+          <span class="stat-change positive">+3 השבוע</span>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon submissions">
+          <mat-icon>assignment</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">89</h3>
+          <p class="stat-label">הגשות חדשות</p>
+          <span class="stat-change neutral">+5 היום</span>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-icon revenue">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="stat-info">
+          <h3 class="stat-number">₪12,450</h3>
+          <p class="stat-label">הכנסות החודש</p>
+          <span class="stat-change positive">+8% מהחודש שעבר</span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="main-content-grid">
+    <!-- Recent Activity -->
+    <mat-card class="activity-card">
+      <mat-card-header>
+        <mat-card-title>פעילות אחרונה</mat-card-title>
+        <mat-card-subtitle>הפעילויות האחרונות בקהילה</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon">
+              <mat-icon>person_add</mat-icon>
+            </div>
+            <div class="activity-content">
+              <h4 class="activity-title">חבר חדש הצטרף</h4>
+              <p class="activity-description">שרה כהן הצטרפה לקהילה</p>
+              <span class="activity-time">לפני 2 שעות</span>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-icon">
+              <mat-icon>event</mat-icon>
+            </div>
+            <div class="activity-content">
+              <h4 class="activity-title">פעילות חדשה נוצרה</h4>
+              <p class="activity-description">צלילות בים הפתוח - 15 בדצמבר</p>
+              <span class="activity-time">לפני 4 שעות</span>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-icon">
+              <mat-icon>assignment</mat-icon>
+            </div>
+            <div class="activity-content">
+              <h4 class="activity-title">הגשה חדשה התקבלה</h4>
+              <p class="activity-description">הרשמה לפעילות צלילות</p>
+              <span class="activity-time">לפני 6 שעות</span>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="activity-icon">
+              <mat-icon>check_circle</mat-icon>
+            </div>
+            <div class="activity-content">
+              <h4 class="activity-title">הגשה אושרה</h4>
+              <p class="activity-description">הרשמה של דוד לוי אושרה</p>
+              <span class="activity-time">לפני 8 שעות</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Upcoming Activities -->
+    <mat-card class="upcoming-card">
+      <mat-card-header>
+        <mat-card-title>פעילויות קרובות</mat-card-title>
+        <mat-card-subtitle>הפעילויות הבאות בקהילה</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="upcoming-list">
+          <div class="upcoming-item">
+            <div class="upcoming-date">
+              <span class="day">15</span>
+              <span class="month">דצמ</span>
+            </div>
+            <div class="upcoming-content">
+              <h4 class="upcoming-title">צלילות בים הפתוח</h4>
+              <p class="upcoming-location">קו טאו, תאילנד</p>
+              <span class="upcoming-participants">12/15 משתתפים</span>
+            </div>
+            <div class="upcoming-status">
+              <span class="status-badge active">פעיל</span>
+            </div>
+          </div>
+
+          <div class="upcoming-item">
+            <div class="upcoming-date">
+              <span class="day">18</span>
+              <span class="month">דצמ</span>
+            </div>
+            <div class="upcoming-content">
+              <h4 class="upcoming-title">סדנת יוגה על החוף</h4>
+              <p class="upcoming-location">חוף סאירי, קו טאו</p>
+              <span class="upcoming-participants">8/20 משתתפים</span>
+            </div>
+            <div class="upcoming-status">
+              <span class="status-badge active">פעיל</span>
+            </div>
+          </div>
+
+          <div class="upcoming-item">
+            <div class="upcoming-date">
+              <span class="day">22</span>
+              <span class="month">דצמ</span>
+            </div>
+            <div class="upcoming-content">
+              <h4 class="upcoming-title">טיול ג'ונגל</h4>
+              <p class="upcoming-location">ג'ונגל קו טאו</p>
+              <span class="upcoming-participants">5/12 משתתפים</span>
+            </div>
+            <div class="upcoming-status">
+              <span class="status-badge upcoming">קרוב</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions-section">
+    <h2 class="section-title">פעולות מהירות</h2>
+    <div class="actions-grid">
+      <button mat-stroked-button class="action-button" routerLink="/admin/submissions">
+        <mat-icon>assignment</mat-icon>
+        <span>ניהול הגשות</span>
+      </button>
+      
+      <button mat-stroked-button class="action-button" routerLink="/admin/activities">
+        <mat-icon>event</mat-icon>
+        <span>ניהול פעילויות</span>
+      </button>
+      
+      <button mat-stroked-button class="action-button" routerLink="/admin/members">
+        <mat-icon>people</mat-icon>
+        <span>ניהול חברים</span>
+      </button>
+      
+      <button mat-stroked-button class="action-button" routerLink="/admin/settings">
+        <mat-icon>settings</mat-icon>
+        <span>הגדרות</span>
+      </button>
+    </div>
+  </div>
+</div>
