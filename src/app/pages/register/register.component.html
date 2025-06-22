@@ -69,13 +69,13 @@
               <div 
                 *ngFor="let activity of activities" 
                 class="interest-item"
-                [class.selected]="isActivitySelected(activity.id)"
+                [class.selected]="isActivitySelected(activity.value)"
               >
                 <label class="interest-label">
                   <input
                     type="checkbox"
-                    [value]="activity.id"
-                    (change)="onInterestChange($event, activity.id)"
+                    [value]="activity.value"
+                    (change)="onInterestChange($event, activity.value)"
                     class="interest-checkbox"
                   />
                   <span class="activity-icon">{{ activity.icon }}</span>

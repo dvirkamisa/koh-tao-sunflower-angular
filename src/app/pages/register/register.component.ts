@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { FormSubmissionService } from '../../services/form-submission.service';
 import { RegisterActivityFormData } from '../../models/form-submission.model';
+import { activities, Activity } from './activities.data';
 
 @Component({
   selector: 'app-register',
@@ -31,15 +32,7 @@ export class RegisterComponent {
   submitted = false;
   error = '';
 
-  activities = [
-    { id: 'diving', label: 'צלילות', icon: '🤿' },
-    { id: 'yoga', label: 'יוגה ופילאטיס', icon: '🧘‍♀️' },
-    { id: 'parties', label: 'מסיבות והופעות', icon: '🎵' },
-    { id: 'ice_bath', label: 'אמבטיות קרח', icon: '❄️' },
-    { id: 'sauna', label: 'סאונה יבשה', icon: '🔥' },
-    { id: 'motorcycle', label: 'טיולי אופנועים', icon: '🏍️' },
-    { id: 'shabbat', label: 'ארוחות שבת', icon: '🕯️' }
-  ];
+  activities: Activity[] = activities;
 
   constructor(
     private fb: FormBuilder,
@@ -54,15 +47,15 @@ export class RegisterComponent {
     });
   }
 
-  isActivitySelected(activityId: string): boolean {
-    return this.selectedInterests.includes(activityId);
+  isActivitySelected(activityValue: string): boolean {
+    return this.selectedInterests.includes(activityValue);
   }
 
-  onInterestChange(event: any, activityId: string) {
+  onInterestChange(event: any, activityValue: string) {
     if (event.target.checked) {
-      this.selectedInterests.push(activityId);
+      this.selectedInterests.push(activityValue);
     } else {
-      this.selectedInterests = this.selectedInterests.filter(id => id !== activityId);
+      this.selectedInterests = this.selectedInterests.filter(value => value !== activityValue);
     }
   }
 
@@ -77,12 +70,18 @@ export class RegisterComponent {
       try {
         const formData = this.registerForm.value;
         
+        // Convert selected activity values to Hebrew labels
+        const selectedActivityLabels = this.selectedInterests.map(activityValue => {
+          const found = this.activities.find(activity => activity.value === activityValue);
+          return found?.label || activityValue;
+        });
+        
         // Transform form data to match RegisterActivityFormData interface
         const submissionData: RegisterActivityFormData = {
           full_name: formData.full_name || '',
           phone: formData.phone || '',
           email: formData.email || '',
-          selectedActivities: this.selectedInterests,
+          selectedActivities: selectedActivityLabels,
           preferred_dates: formData.preferred_dates || '',
           additional_notes: formData.additional_notes || ''
         };
