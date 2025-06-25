@@ -1,12 +1,21 @@
 <section class="hero-section">
-  <!-- Background Video/Image -->
+  <!-- Background Video -->
   <div class="hero-background">
-    <div class="hero-gradient">
-
-      
-      <!-- Overlay -->
-      <div class="hero-overlay"></div>
-    </div>
+    <video 
+      class="hero-video" 
+      autoplay 
+      muted 
+      loop 
+      playsinline
+      preload="auto"
+    >
+      <source src="assets/video/VideoProject.webm" type="video/webm">
+      <!-- Fallback gradient if video fails to load -->
+      <div class="hero-gradient"></div>
+    </video>
+    
+    <!-- Enhanced Overlay for better text visibility -->
+    <div class="hero-overlay"></div>
   </div>
 
   <!-- Content -->
