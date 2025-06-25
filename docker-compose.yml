@@ -1,0 +1,38 @@
+services:
+  # Development service with ng serve
+  angular_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run start -- --host 0.0.0.0 --port 4200 --poll
+    stdin_open: true
+    tty: true
+
+  # Production build service
+  angular_build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    volumes:
+      - ./dist:/app/dist
+    command: npm run build
+
+  # Production serve with nginx
+  angular_prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "80:80"
+    depends_on:
+      - angular_build 
