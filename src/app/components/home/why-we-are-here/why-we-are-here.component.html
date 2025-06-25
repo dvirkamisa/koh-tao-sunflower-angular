@@ -1,43 +1,69 @@
 <section class="why-section">
   <div class="container">
     <div class="section-header">
-      <h2>למה אנחנו כאן?</h2>
-      <div class="section-divider"></div>
+      <span class="section-label">קהילת KOH TAO SUNFLOWER</span>
+      <h2 class="main-title">
+        ברוכים הבאים לבית הישראלי<br>
+        <span class="highlight">בקו טאו</span>
+      </h2>
+      <div class="logo-container">
+        <img src="assets/images/logo2.png" alt="Koh Tao Sunflower Logo" class="sunflower-logo">
+      </div>
     </div>
 
-    <div class="content-grid">
-      <div class="text-content">
-        <p class="description">
-          דמיינו שאתם רוקדים תחת השמיים זרועי הכוכבים, המוזיקה בועטת, והאנרגיה מתפוצצת ברחבה. 
-          הבוקר עולה, ואתם נמתחים על המזרן לאימון יוגה מול הים, הנשימות מתמזגות עם הגלים.
-        </p>
-        
-        <p class="description">
-          אחר כך, אתם קופצים למים, צוללים בין אלמוגים ודגים צבעוניים, הלב דופק מהתרגשות. 
-          ובערב, הגיטרה מנגנת, הקהל שר יחד, והלב מתמלא מהחום של ההופעה החיה.
-        </p>
-        
-        <p class="description">
-          כשאתם צריכים רגע של רוגע, אמבטיית קרח וסאונה יבשה מרעננים את הגוף והנפש לצד נופים ירוקים בלב ג'ונגל טרופי. 
-          ומשם עם אופנוע ורוח על הפנים, אתם דוהרים לגלות פינות נסתרות של גן עדן.
-        </p>
-        
-        <div class="quote-box">
-          <p class="quote-text">
-            "כל רגע הוא הרפתקה, וכל שנייה היא זיכרון שתיקחו איתכם לנצח."
-          </p>
+    <div class="intro-section">
+      <p class="intro-text">
+        בעקבות היעדר בית חב״ד או מרכז ישראלי רשמי באי, הקמנו קהילה שתהיה עבורכם בית ברגעים הטובים, 
+        ובמיוחד במאתגרים. אנו הישראלים החיים באי, יצרנו מרחב חם ותומך שמטרתו ללוות, לשמח ולסייע במהלך השהות שלכם כאן.
+      </p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-item">
+        <div class="value-icon-wrapper">
+          <span class="material-icons">home</span>
         </div>
+        <h3>בית חם ומקבל</h3>
+        <p>מרחב שבו כל ישראלי מרגיש בבית, עם קהילה תומכת שמלווה אתכם בכל רגע</p>
       </div>
 
-      <div class="activities-grid">
-        <div 
-          *ngFor="let activity of activities; let i = index" 
-          class="activity-card"
-        >
-          <div class="activity-icon">
-            <span class="material-icons">{{ activity.icon }}</span>
-          </div>
-          <p class="activity-text">{{ activity.text }}</p>
+      <div class="value-item">
+        <div class="value-icon-wrapper">
+          <span class="material-icons">support</span>
+        </div>
+        <h3>עזרה ותמיכה</h3>
+        <p>סיוע מול בעלי עסקים, טיפול בתאונות, וכתובת לכל בעיה או אתגר שתיתקלו בו</p>
+      </div>
+
+      <div class="value-item">
+        <div class="value-icon-wrapper">
+          <span class="material-icons">favorite</span>
+        </div>
+        <h3>חום ואהבה</h3>
+        <p>חיבוק קהילתי חם, רגעים של שקט ורוגע, ותחושת ביטחון רחוק מהבית</p>
+      </div>
+
+      <div class="value-item">
+        <div class="value-icon-wrapper">
+          <span class="material-icons">volunteer_activism</span>
+        </div>
+        <h3>שליחות ונתינה</h3>
+        <p>פועלים מתוך רצון להקל על המטיילים בתקופה מאתגרת, ולהעניק רגעי נחמה ושמחה</p>
+      </div>
+    </div>
+
+    <div class="mission-section">
+      <div class="mission-content">
+        <div class="mission-icon">
+          <span class="material-icons" style="font-size: 40px;">local_florist</span>
+        </div>
+        <p class="mission-text">
+          אנו פועלים מתוך שליחות ורצון להקל על המטיילים המגיעים לנפוש ולהיטען מחדש, 
+          בתקופה שבה השגרה בארץ הפכה למורכבת מתמיד.
+        </p>
+        <div class="signature">
+          <span>שלכם באהבה,</span>
+          <strong>קהילת KOH TAO SUNFLOWER</strong>
         </div>
       </div>
     </div>

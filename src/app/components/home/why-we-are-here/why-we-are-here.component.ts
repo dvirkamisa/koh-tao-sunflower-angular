@@ -9,15 +9,8 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./why-we-are-here.component.scss']
 })
 /**
- * Section explaining the community activities.
+ * Section explaining the Israeli community in Koh Tao and its mission.
  */
 export class WhyWeAreHereComponent {
-  activities = [
-    { icon: 'music_note', text: 'מסיבות תחת כוכבים' },
-    { icon: 'waves', text: 'יוגה מול הים' },
-    { icon: 'landscape', text: 'צלילות באלמוגים' },
-    { icon: 'coffee', text: 'הופעות חיות' },
-    { icon: 'ac_unit', text: 'אמבטיות קרח' },
-    { icon: 'directions_bike', text: 'טיולי אופנועים' }
-  ];
+  // Component now focuses on community message rather than activities
 } 
