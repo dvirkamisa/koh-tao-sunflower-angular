@@ -16,7 +16,11 @@ COPY . .
 # Development stage
 FROM base AS development
 EXPOSE 4200
-CMD ["npm", "run", "start", "--", "--host", "0.0.0.0", "--port", "4200", "--poll"]
+# Install nodemon for better development experience
+RUN npm install -g nodemon
+# Ensure proper permissions for node_modules and app directory
+RUN chmod -R 755 /app
+CMD ["npm", "run", "start", "--", "--host", "0.0.0.0", "--port", "4200", "--poll", "2000", "--live-reload", "--disable-host-check"]
 
 # Build stage
 FROM base AS build

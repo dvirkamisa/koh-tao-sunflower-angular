@@ -10,9 +10,11 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - /app/dist
     environment:
       - NODE_ENV=development
-    command: npm run start -- --host 0.0.0.0 --port 4200 --poll
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run start -- --host 0.0.0.0 --port 4200 --poll 2000 --live-reload --disable-host-check
     stdin_open: true
     tty: true
 
