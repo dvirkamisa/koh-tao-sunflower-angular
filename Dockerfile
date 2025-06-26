@@ -18,8 +18,8 @@ FROM base AS development
 EXPOSE 4200
 # Install nodemon for better development experience
 RUN npm install -g nodemon
-# Ensure proper permissions for node_modules and app directory
-RUN chmod -R 755 /app
+# Only set permissions for necessary files, not the entire /app directory
+RUN chmod +x /usr/local/bin/* 2>/dev/null || true
 CMD ["npm", "run", "start", "--", "--host", "0.0.0.0", "--port", "4200", "--poll", "2000", "--live-reload", "--disable-host-check"]
 
 # Build stage

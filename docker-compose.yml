@@ -1,4 +1,14 @@
 services:
+  # Copy node_modules to host for IDE support
+  setup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - .:/host
+    command: cp -r /app/node_modules /host/
+    
   # Development service with ng serve
   angular_dev:
     build:
