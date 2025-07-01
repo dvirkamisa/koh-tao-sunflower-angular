@@ -6,12 +6,6 @@
         <h1 class="welcome-title">ברוכים הבאים ללוח הניהול</h1>
         <p class="welcome-subtitle">ניהול קהילת קו טאו סאנפלואר</p>
       </div>
-      <div class="welcome-actions">
-        <button mat-flat-button color="primary" class="quick-action-btn">
-          <mat-icon>add</mat-icon>
-          הוסף פעילות חדשה
-        </button>
-      </div>
     </div>
   </div>
 
@@ -23,9 +17,9 @@
           <mat-icon>people</mat-icon>
         </div>
         <div class="stat-info">
-          <h3 class="stat-number">156</h3>
+          <h3 class="stat-number">{{ totalMembers$ | async }}</h3>
           <p class="stat-label">חברי קהילה</p>
-          <span class="stat-change positive">+12% מהחודש שעבר</span>
+          <span class="stat-change positive">חברים מאושרים</span>
         </div>
       </div>
     </mat-card>
@@ -36,9 +30,9 @@
           <mat-icon>event</mat-icon>
         </div>
         <div class="stat-info">
-          <h3 class="stat-number">24</h3>
-          <p class="stat-label">פעילויות פעילות</p>
-          <span class="stat-change positive">+3 השבוע</span>
+          <h3 class="stat-number">{{ totalActivities$ | async }}</h3>
+          <p class="stat-label">פעילויות</p>
+          <span class="stat-change positive">סה"כ פעילויות</span>
         </div>
       </div>
     </mat-card>
@@ -49,140 +43,41 @@
           <mat-icon>assignment</mat-icon>
         </div>
         <div class="stat-info">
-          <h3 class="stat-number">89</h3>
-          <p class="stat-label">הגשות חדשות</p>
-          <span class="stat-change neutral">+5 היום</span>
-        </div>
-      </div>
-    </mat-card>
-
-    <mat-card class="stat-card">
-      <div class="stat-content">
-        <div class="stat-icon revenue">
-          <mat-icon>trending_up</mat-icon>
-        </div>
-        <div class="stat-info">
-          <h3 class="stat-number">₪12,450</h3>
-          <p class="stat-label">הכנסות החודש</p>
-          <span class="stat-change positive">+8% מהחודש שעבר</span>
+          <h3 class="stat-number">{{ pendingSubmissions$ | async }}</h3>
+          <p class="stat-label">הגשות ממתינות</p>
+          <span class="stat-change neutral">+{{ todaySubmissions$ | async }} היום</span>
         </div>
       </div>
     </mat-card>
   </div>
 
-  <!-- Main Content Grid -->
-  <div class="main-content-grid">
-    <!-- Recent Activity -->
-    <mat-card class="activity-card">
-      <mat-card-header>
-        <mat-card-title>פעילות אחרונה</mat-card-title>
-        <mat-card-subtitle>הפעילויות האחרונות בקהילה</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="activity-list">
-          <div class="activity-item">
-            <div class="activity-icon">
-              <mat-icon>person_add</mat-icon>
-            </div>
-            <div class="activity-content">
-              <h4 class="activity-title">חבר חדש הצטרף</h4>
-              <p class="activity-description">שרה כהן הצטרפה לקהילה</p>
-              <span class="activity-time">לפני 2 שעות</span>
-            </div>
+  <!-- Recent Activity Only -->
+  <mat-card class="activity-card">
+    <mat-card-header>
+      <mat-card-title>פעילות אחרונה</mat-card-title>
+      <mat-card-subtitle>הפעילויות האחרונות בקהילה</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let activity of recentActivity$ | async">
+          <div class="activity-icon">
+            <mat-icon>{{ activity.icon }}</mat-icon>
           </div>
-
-          <div class="activity-item">
-            <div class="activity-icon">
-              <mat-icon>event</mat-icon>
-            </div>
-            <div class="activity-content">
-              <h4 class="activity-title">פעילות חדשה נוצרה</h4>
-              <p class="activity-description">צלילות בים הפתוח - 15 בדצמבר</p>
-              <span class="activity-time">לפני 4 שעות</span>
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div class="activity-icon">
-              <mat-icon>assignment</mat-icon>
-            </div>
-            <div class="activity-content">
-              <h4 class="activity-title">הגשה חדשה התקבלה</h4>
-              <p class="activity-description">הרשמה לפעילות צלילות</p>
-              <span class="activity-time">לפני 6 שעות</span>
-            </div>
-          </div>
-
-          <div class="activity-item">
-            <div class="activity-icon">
-              <mat-icon>check_circle</mat-icon>
-            </div>
-            <div class="activity-content">
-              <h4 class="activity-title">הגשה אושרה</h4>
-              <p class="activity-description">הרשמה של דוד לוי אושרה</p>
-              <span class="activity-time">לפני 8 שעות</span>
-            </div>
+          <div class="activity-content">
+            <h4 class="activity-title">{{ activity.title }}</h4>
+            <p class="activity-description">{{ activity.description }}</p>
+            <span class="activity-time">{{ activity.time }}</span>
           </div>
         </div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- Upcoming Activities -->
-    <mat-card class="upcoming-card">
-      <mat-card-header>
-        <mat-card-title>פעילויות קרובות</mat-card-title>
-        <mat-card-subtitle>הפעילויות הבאות בקהילה</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="upcoming-list">
-          <div class="upcoming-item">
-            <div class="upcoming-date">
-              <span class="day">15</span>
-              <span class="month">דצמ</span>
-            </div>
-            <div class="upcoming-content">
-              <h4 class="upcoming-title">צלילות בים הפתוח</h4>
-              <p class="upcoming-location">קו טאו, תאילנד</p>
-              <span class="upcoming-participants">12/15 משתתפים</span>
-            </div>
-            <div class="upcoming-status">
-              <span class="status-badge active">פעיל</span>
-            </div>
-          </div>
-
-          <div class="upcoming-item">
-            <div class="upcoming-date">
-              <span class="day">18</span>
-              <span class="month">דצמ</span>
-            </div>
-            <div class="upcoming-content">
-              <h4 class="upcoming-title">סדנת יוגה על החוף</h4>
-              <p class="upcoming-location">חוף סאירי, קו טאו</p>
-              <span class="upcoming-participants">8/20 משתתפים</span>
-            </div>
-            <div class="upcoming-status">
-              <span class="status-badge active">פעיל</span>
-            </div>
-          </div>
-
-          <div class="upcoming-item">
-            <div class="upcoming-date">
-              <span class="day">22</span>
-              <span class="month">דצמ</span>
-            </div>
-            <div class="upcoming-content">
-              <h4 class="upcoming-title">טיול ג'ונגל</h4>
-              <p class="upcoming-location">ג'ונגל קו טאו</p>
-              <span class="upcoming-participants">5/12 משתתפים</span>
-            </div>
-            <div class="upcoming-status">
-              <span class="status-badge upcoming">קרוב</span>
-            </div>
+        
+        <div class="activity-item" *ngIf="!(recentActivity$ | async)?.length">
+          <div class="activity-content">
+            <p class="activity-description">אין פעילות אחרונה</p>
           </div>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
   <!-- Quick Actions -->
   <div class="quick-actions-section">
@@ -193,19 +88,14 @@
         <span>ניהול הגשות</span>
       </button>
       
-      <button mat-stroked-button class="action-button" routerLink="/admin/activities">
+      <button mat-stroked-button class="action-button" routerLink="/join-us">
+        <mat-icon>person_add</mat-icon>
+        <span>הוסף חבר קהילה</span>
+      </button>
+      
+      <button mat-stroked-button class="action-button" routerLink="/register">
         <mat-icon>event</mat-icon>
-        <span>ניהול פעילויות</span>
-      </button>
-      
-      <button mat-stroked-button class="action-button" routerLink="/admin/members">
-        <mat-icon>people</mat-icon>
-        <span>ניהול חברים</span>
-      </button>
-      
-      <button mat-stroked-button class="action-button" routerLink="/admin/settings">
-        <mat-icon>settings</mat-icon>
-        <span>הגדרות</span>
+        <span>הרשמה לפעילות</span>
       </button>
     </div>
   </div>

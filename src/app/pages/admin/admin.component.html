@@ -33,22 +33,7 @@
       <a mat-list-item routerLink="submissions" routerLinkActive="active" class="nav-item">
         <mat-icon matListItemIcon>assignment</mat-icon>
         <span matListItemTitle>הגשות</span>
-        <span matListItemMeta class="badge">12</span>
-      </a>
-      
-      <a mat-list-item routerLink="activities" routerLinkActive="active" class="nav-item">
-        <mat-icon matListItemIcon>event</mat-icon>
-        <span matListItemTitle>פעילויות</span>
-      </a>
-      
-      <a mat-list-item routerLink="members" routerLinkActive="active" class="nav-item">
-        <mat-icon matListItemIcon>people</mat-icon>
-        <span matListItemTitle>חברי קהילה</span>
-      </a>
-      
-      <a mat-list-item routerLink="settings" routerLinkActive="active" class="nav-item">
-        <mat-icon matListItemIcon>settings</mat-icon>
-        <span matListItemTitle>הגדרות</span>
+        <span matListItemMeta class="badge">{{ pendingSubmissionsCount }}</span>
       </a>
     </mat-nav-list>
 
@@ -78,7 +63,7 @@
       
       <div class="toolbar-right">
         <button mat-icon-button class="notification-btn">
-          <mat-icon [matBadge]="3" matBadgeColor="warn">notifications</mat-icon>
+          <mat-icon [matBadge]="pendingSubmissionsCount" matBadgeColor="warn">notifications</mat-icon>
         </button>
         <button mat-icon-button class="profile-btn">
           <mat-icon>account_circle</mat-icon>

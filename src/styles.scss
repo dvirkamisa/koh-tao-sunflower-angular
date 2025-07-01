@@ -398,7 +398,8 @@ a {
 }
 
 /* Material Icons */
-.material-icons {
+.material-icons,
+mat-icon {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -412,4 +413,6 @@ a {
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+  font-display: block;
+  vertical-align: middle;
 } 

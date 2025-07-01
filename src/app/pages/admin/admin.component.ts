@@ -1,33 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
+import { FormSubmissionService } from '../../services/form-submission.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
+    RouterModule,
     MatSidenavModule,
-    MatToolbarModule,
     MatListModule,
     MatIconModule,
+    MatToolbarModule,
     MatButtonModule,
     MatBadgeModule
   ],
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent {
-  constructor(private router: Router) {}
+export class AdminComponent implements OnInit {
+  private router = inject(Router);
+  private formService = inject(FormSubmissionService);
+  
+  pendingSubmissionsCount = 0;
+
+  ngOnInit() {
+    // Subscribe to pending submissions count
+    this.formService.getAllSubmissions().pipe(
+      map(submissions => submissions.filter(s => s.status === 'pending').length)
+    ).subscribe(count => {
+      this.pendingSubmissionsCount = count;
+    });
+  }
 
   getCurrentPageTitle(): string {
     const url = this.router.url;

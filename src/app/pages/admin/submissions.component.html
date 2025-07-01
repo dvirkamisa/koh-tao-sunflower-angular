@@ -6,12 +6,6 @@
         <h1 class="page-title">הגשות</h1>
         <p class="page-subtitle">ניהול כל ההגשות והטפסים</p>
       </div>
-      <div class="header-right">
-        <button mat-flat-button color="primary" class="add-btn" (click)="openAddDialog()">
-          <mat-icon>add</mat-icon>
-          הוסף הגשה חדשה
-        </button>
-      </div>
     </div>
   </div>
 
@@ -61,21 +55,160 @@
         <div class="stat-info">
           <h3 class="stat-number">{{ submissions.length }}</h3>
           <p class="stat-label">סה"כ הגשות</p>
+          <span class="stat-change" *ngIf="activeFilters.length > 0">
+            מציג {{ filteredSubmissions.length }}
+          </span>
         </div>
       </div>
     </mat-card>
   </div>
 
+  <!-- Advanced Filters Section -->
+  <div class="filters-section">
+    <div class="filters-header">
+      <h3 class="filters-title">
+        <mat-icon>filter_list</mat-icon>
+        סינון הגשות
+      </h3>
+      <div class="filter-actions">
+        <div class="results-info" *ngIf="searchText || selectedStatus !== 'all' || selectedFormType !== 'all' || dateRange.start || dateRange.end">
+          <mat-icon>info</mat-icon>
+          נמצאו <strong>{{ filteredSubmissions.length }}</strong> הגשות מתוך <strong>{{ submissions.length }}</strong>
+        </div>
+        <button mat-button class="clear-filters-btn" 
+                *ngIf="activeFilters.length > 0"
+                (click)="clearFilters()">
+          <mat-icon>clear</mat-icon>
+          נקה סינון
+        </button>
+      </div>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>חיפוש חופשי</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input matInput 
+               [(ngModel)]="searchText" 
+               (ngModelChange)="applyFilters()"
+               placeholder="חפש לפי שם, טלפון, אימייל...">
+        <button mat-icon-button matSuffix *ngIf="searchText" (click)="searchText = ''; applyFilters()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    
+    <div class="filters-container">
+      <!-- Status Filter -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <mat-icon>flag</mat-icon>
+          סטטוס:
+        </label>
+        <mat-chip-listbox [value]="selectedStatus" (change)="onStatusFilterChange($event)">
+          <mat-chip-option value="all" class="filter-chip all">
+            <mat-icon>filter_list</mat-icon>
+            הכל
+          </mat-chip-option>
+          <mat-chip-option value="pending" class="filter-chip pending">
+            <mat-icon>schedule</mat-icon>
+            ממתינות ({{ getPendingCount() }})
+          </mat-chip-option>
+          <mat-chip-option value="approved" class="filter-chip approved">
+            <mat-icon>check_circle</mat-icon>
+            אושרו ({{ getApprovedCount() }})
+          </mat-chip-option>
+          <mat-chip-option value="rejected" class="filter-chip rejected">
+            <mat-icon>cancel</mat-icon>
+            נדחו ({{ getRejectedCount() }})
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+      
+      <!-- Form Type Filter -->
+      <div class="filter-group">
+        <label class="filter-label">
+          <mat-icon>description</mat-icon>
+          סוג טופס:
+        </label>
+        <mat-chip-listbox [value]="selectedFormType" (change)="onFormTypeFilterChange($event)">
+          <mat-chip-option value="all" class="filter-chip all">
+            <mat-icon>filter_list</mat-icon>
+            הכל
+          </mat-chip-option>
+          <mat-chip-option value="join-us" class="filter-chip join-us">
+            <mat-icon>person_add</mat-icon>
+            הצטרף אלינו
+          </mat-chip-option>
+          <mat-chip-option value="register-activity" class="filter-chip register-activity">
+            <mat-icon>event</mat-icon>
+            הרשמה לפעילות
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+      
+      <!-- Date Range Filter -->
+      <div class="filter-group date-filter">
+        <label class="filter-label">
+          <mat-icon>date_range</mat-icon>
+          תאריך:
+        </label>
+        <div class="date-range-container">
+          <mat-form-field appearance="outline" class="date-field">
+            <mat-label>מתאריך</mat-label>
+            <input matInput [matDatepicker]="startPicker" [(ngModel)]="dateRange.start" (dateChange)="applyFilters()">
+            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+            <mat-datepicker #startPicker></mat-datepicker>
+          </mat-form-field>
+          
+          <span class="date-separator">-</span>
+          
+          <mat-form-field appearance="outline" class="date-field">
+            <mat-label>עד תאריך</mat-label>
+            <input matInput [matDatepicker]="endPicker" [(ngModel)]="dateRange.end" (dateChange)="applyFilters()">
+            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+            <mat-datepicker #endPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Active Filters Display -->
+    <div class="active-filters" *ngIf="activeFilters.length > 0">
+      <span class="active-filters-label">פילטרים פעילים:</span>
+      <mat-chip-set>
+        <mat-chip *ngFor="let filter of activeFilters" [removable]="true" (removed)="removeFilter(filter)">
+          {{ filter }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </div>
+
+  <!-- Results Summary -->
+  <div class="results-summary" *ngIf="filteredSubmissions.length > 0">
+    <div class="summary-content">
+      <mat-icon>assignment</mat-icon>
+      <span>מציג <strong>{{ filteredSubmissions.length }}</strong> הגשות</span>
+      <span *ngIf="searchText || selectedStatus !== 'all' || selectedFormType !== 'all' || dateRange.start || dateRange.end">
+        (מתוך {{ submissions.length }} סה"כ)
+      </span>
+    </div>
+  </div>
+
   <!-- Submissions Table -->
   <mat-card class="table-card">
     <mat-card-header>
-      <mat-card-title>רשימת הגשות</mat-card-title>
+      <mat-card-title>
+        רשימת הגשות
+      </mat-card-title>
       <mat-card-subtitle>כל ההגשות והטפסים שהתקבלו</mat-card-subtitle>
     </mat-card-header>
     
     <mat-card-content>
       <div class="table-container">
-        <table mat-table [dataSource]="submissions" class="submissions-table" multiTemplateDataRows>
+        <table mat-table [dataSource]="filteredSubmissions" class="submissions-table" multiTemplateDataRows>
           <!-- User Column -->
           <ng-container matColumnDef="user">
             <th mat-header-cell *matHeaderCellDef class="table-header">
@@ -91,7 +224,29 @@
                 </div>
                 <div class="user-details">
                   <span class="user-name">{{ submission.userIdentity }}</span>
-                  <span class="user-email" *ngIf="submission.data.email">{{ submission.data.email }}</span>
+                  <span class="user-subtext">{{ submission.data.full_name }}</span>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Contact Column -->
+          <ng-container matColumnDef="contact">
+            <th mat-header-cell *matHeaderCellDef class="table-header">
+              <div class="header-content">
+                <mat-icon>contact_phone</mat-icon>
+                <span>פרטי קשר</span>
+              </div>
+            </th>
+            <td mat-cell *matCellDef="let submission" class="contact-cell">
+              <div class="contact-info">
+                <div class="contact-item" *ngIf="getContactInfo(submission).phone !== '-'">
+                  <mat-icon>phone</mat-icon>
+                  <span>{{ getContactInfo(submission).phone }}</span>
+                </div>
+                <div class="contact-item" *ngIf="getContactInfo(submission).email !== '-'">
+                  <mat-icon>email</mat-icon>
+                  <span>{{ getContactInfo(submission).email }}</span>
                 </div>
               </div>
             </td>
@@ -157,11 +312,28 @@
               <div class="action-buttons">
                 <button mat-icon-button 
                         color="primary" 
+                        class="action-btn view-btn"
+                        (click)="viewSubmission(submission)"
+                        matTooltip="צפה בפרטים">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                
+                <button mat-icon-button 
+                        color="primary" 
                         class="action-btn approve-btn"
-                        (click)="markProcessed(submission)"
+                        (click)="updateSubmissionStatus(submission, 'approved')"
                         [disabled]="submission.status === 'approved'"
                         matTooltip="אשר הגשה">
                   <mat-icon>check</mat-icon>
+                </button>
+                
+                <button mat-icon-button 
+                        color="warn" 
+                        class="action-btn reject-btn"
+                        (click)="updateSubmissionStatus(submission, 'rejected')"
+                        [disabled]="submission.status === 'rejected'"
+                        matTooltip="דחה הגשה">
+                  <mat-icon>close</mat-icon>
                 </button>
                 
                 <button mat-icon-button 
@@ -171,14 +343,6 @@
                         matTooltip="מחק הגשה">
                   <mat-icon>delete</mat-icon>
                 </button>
-                
-                <button mat-icon-button 
-                        color="accent" 
-                        class="action-btn view-btn"
-                        (click)="viewSubmission(submission)"
-                        matTooltip="צפה בפרטים">
-                  <mat-icon>visibility</mat-icon>
-                </button>
               </div>
             </td>
           </ng-container>
@@ -186,7 +350,77 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-header-row"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
         </table>
+        
+        <!-- Empty State -->
+        <div class="empty-state" *ngIf="filteredSubmissions.length === 0">
+          <mat-icon>inbox</mat-icon>
+          <h3>אין הגשות להצגה</h3>
+          <p *ngIf="submissions.length === 0">עדיין לא התקבלו הגשות במערכת</p>
+          <p *ngIf="submissions.length > 0">לא נמצאו הגשות התואמות לסינון שנבחר</p>
+          <button mat-button color="primary" (click)="clearFilters()" *ngIf="submissions.length > 0">נקה סינון</button>
+        </div>
       </div>
     </mat-card-content>
   </mat-card>
 </div>
+
+<!-- View Submission Dialog -->
+<ng-template #viewDialog>
+  <div class="view-dialog">
+    <h2 mat-dialog-title>פרטי הגשה</h2>
+    
+    <mat-dialog-content>
+      <div class="submission-details" *ngIf="selectedSubmission">
+        <!-- Header Info -->
+        <div class="dialog-header">
+          <div class="form-type-badge large" [class]="selectedSubmission.formType">
+            <mat-icon>{{ getFormTypeIcon(selectedSubmission.formType) }}</mat-icon>
+            <span>{{ selectedSubmission.formName }}</span>
+          </div>
+          <div class="status-badge large" [class]="selectedSubmission.status">
+            <mat-icon>{{ getStatusIcon(selectedSubmission.status) }}</mat-icon>
+            <span>{{ getStatusText(selectedSubmission.status) }}</span>
+          </div>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <!-- Submission Details -->
+        <div class="details-grid">
+          <div class="detail-item" *ngFor="let item of getSubmissionDetails(selectedSubmission) | keyvalue">
+            <span class="detail-label">{{ item.key }}:</span>
+            <span class="detail-value">{{ item.value }}</span>
+          </div>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <!-- Meta Information -->
+        <div class="meta-info">
+          <div class="meta-item">
+            <mat-icon>schedule</mat-icon>
+            <span>נשלח ב: {{ formatDate(selectedSubmission.timestamp) }}</span>
+          </div>
+          <div class="meta-item" *ngIf="selectedSubmission.reviewedAt">
+            <mat-icon>check_circle</mat-icon>
+            <span>נבדק ב: {{ formatDate(selectedSubmission.reviewedAt) }}</span>
+          </div>
+          <div class="meta-item" *ngIf="selectedSubmission.reviewedBy">
+            <mat-icon>person</mat-icon>
+            <span>נבדק על ידי: {{ selectedSubmission.reviewedBy }}</span>
+          </div>
+        </div>
+      </div>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="closeDialog()">סגור</button>
+      <button mat-flat-button 
+              color="primary" 
+              *ngIf="selectedSubmission && selectedSubmission.status === 'pending'"
+              (click)="updateSubmissionStatus(selectedSubmission!, 'approved'); closeDialog()">
+        אשר הגשה
+      </button>
+    </mat-dialog-actions>
+  </div>
+</ng-template>
