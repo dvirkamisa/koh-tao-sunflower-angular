@@ -1,0 +1,56 @@
+<div class="carousel-gallery" 
+     [ngStyle]="carouselStyles"
+     [attr.tabindex]="0"
+     (mouseenter)="pauseAutoplay()" 
+     (mouseleave)="resumeAutoplay()"
+     (touchstart)="onTouchStart($event)" 
+     (touchend)="onTouchEnd($event)">
+     
+  <div class="carousel-image-wrapper">
+    <img *ngIf="images.length" 
+         [src]="images[current].src" 
+         [alt]="images[current].alt || 'תמונה'" 
+         class="carousel-image"
+         (click)="onImageClick()">
+         
+    <div *ngIf="images[current]?.title || images[current]?.description" class="carousel-text">
+      <h3 *ngIf="images[current]?.title" class="carousel-title">
+        {{ images[current].title }}
+      </h3>
+      <p *ngIf="images[current]?.description" class="carousel-description">
+        {{ images[current].description }}
+      </p>
+    </div>
+    
+    <!-- Navigation Arrows -->
+    <button *ngIf="showArrows && images.length > 1" 
+            class="carousel-arrow right" 
+            (click)="next()" 
+            [disabled]="!loop && current === images.length - 1"
+            aria-label="הבא">
+      <span class="material-icons">chevron_right</span>
+    </button>
+    
+    <button *ngIf="showArrows && images.length > 1" 
+            class="carousel-arrow left" 
+            (click)="prev()" 
+            [disabled]="!loop && current === 0"
+            aria-label="הקודם">
+      <span class="material-icons">chevron_left</span>
+    </button>
+  </div>
+  
+  <!-- Indicators -->
+  <div *ngIf="showIndicators && images.length > 1" class="carousel-indicators">
+    <button *ngFor="let img of images; let i = index"
+            [class.active]="i === current"
+            (click)="goTo(i)"
+            [attr.aria-label]="'עבור לתמונה ' + (i+1)">
+    </button>
+  </div>
+  
+  <!-- Image counter -->
+  <div *ngIf="images.length > 1" class="carousel-counter">
+    {{ current + 1 }} / {{ images.length }}
+  </div>
+</div> 

@@ -7,7 +7,21 @@
       </p>
       <div class="section-divider"></div>
     </div>
-
+    <app-carousel-gallery 
+      [images]="carouselImages"
+      [autoplay]="true"
+      [delay]="4000"
+      [height]="'400px'"
+      [showIndicators]="true"
+      [showArrows]="true"
+      [pauseOnHover]="true"
+      [loop]="true"
+      [transitionDuration]="600"
+      (slideChange)="onSlideChange($event)"
+      (imageClick)="onImageClick($event)"
+      (autoplayStart)="onAutoplayStart()"
+      (autoplayStop)="onAutoplayStop()">
+    </app-carousel-gallery>
     <div class="activities-grid">
       <div 
         *ngFor="let activity of activities; let i = index" 
