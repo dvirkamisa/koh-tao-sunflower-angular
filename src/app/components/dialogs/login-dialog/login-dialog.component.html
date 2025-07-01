@@ -1,0 +1,64 @@
+<div class="login-dialog">
+  <h2 mat-dialog-title>כניסה למערכת ניהול</h2>
+  
+  <mat-dialog-content>
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+      <div class="login-icon">
+        <mat-icon>admin_panel_settings</mat-icon>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>שם משתמש</mat-label>
+        <input 
+          matInput 
+          type="text" 
+          [(ngModel)]="username"
+          name="username"
+          autocomplete="username"
+          required
+          #usernameInput
+        >
+        <mat-icon matPrefix>person</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>סיסמה</mat-label>
+        <input 
+          matInput 
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          name="password"
+          autocomplete="current-password"
+          required
+        >
+        <mat-icon matPrefix>lock</mat-icon>
+        <button 
+          mat-icon-button 
+          matSuffix 
+          type="button"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="'Toggle password visibility'"
+        >
+          <mat-icon>{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="error-message" *ngIf="errorMessage">
+        <mat-icon>error</mat-icon>
+        <span>{{ errorMessage }}</span>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">ביטול</button>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="onLogin()"
+      [disabled]="!username || !password"
+    >
+      כניסה
+    </button>
+  </mat-dialog-actions>
+</div> 

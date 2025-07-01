@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { FormSubmissionService } from '../../services/form-submission.service';
+import { AuthService } from '../../services/auth.service';
 import { map, Observable } from 'rxjs';
 
 @Component({
@@ -29,6 +30,7 @@ import { map, Observable } from 'rxjs';
 export class AdminComponent implements OnInit {
   private router = inject(Router);
   private formService = inject(FormSubmissionService);
+  private authService = inject(AuthService);
   
   pendingSubmissionsCount = 0;
 
@@ -52,9 +54,7 @@ export class AdminComponent implements OnInit {
   }
 
   logout(): void {
-    // Add logout logic here
-    console.log('Logout clicked');
-    // Navigate to home page or login page
+    this.authService.logout();
     this.router.navigate(['/']);
   }
 }
